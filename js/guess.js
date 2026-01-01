@@ -73,6 +73,7 @@ function resetGame() {
   guessInput.value = "";
 }
 
+// Events
 guessBtn.addEventListener("click", handleGuess);
 restartBtn.addEventListener("click", resetGame);
 
