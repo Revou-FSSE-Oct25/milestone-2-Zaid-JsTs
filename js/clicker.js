@@ -1,35 +1,73 @@
-let count = 0;
-let timeLeft = 10;
+const gameState = {
+    count: 0,
+    timeLeft: 10,
+    isGameOver: false,
+    timerId: null
+};
 
+// DOM
 const countText = document.getElementById("count");
 const clickBtn = document.getElementById("clickBtn");
 const resetBtn = document.getElementById("resetBtn");
 const timerText = document.getElementById("timer");
 
-countText.textContent = count;
-timerText.textContent = `Time left: ${timeLeft}`;
+function updateUI() {
+    countText.textContent = gameState.count;
+    timerText.textContent = `Time left: ${gameState.timeLeft}s`;
+}
+
+updateUI();
+startTimer();
 
 // Timer
-const timer = setInterval(function () {
-    timeLeft--;
-    timerText.textContent = `Time left: ${timeLeft}`;
+function startTimer () {
+    gameState.timerId = setInterval(function () {
+        if (gameState.timeLeft <= 0) {
+            endGame();
+            return;
+        }
 
-    if (timeLeft === 0) {
-        clearInterval(timer);
-        clickBtn.disabled = true;
-        alert(`Time's up! Your final score is ${count}`);
-    }
-}, 1000);
+        gameState.timeLeft--;
+        updateUI();
+    }, 1000);
+}
 
 // Click button
-clickBtn.addEventListener("click", function () {
-    if (timeLeft > 0) {
-        count++;
-        countText.textContent = count;
-    }
-});
+function handleClick() {
+    if (gameState.isGameOver) return;
 
-// Reset button
-resetBtn.addEventListener("click", function () {
-    location.reload(); 
-});
+    gameState.count++;
+    updateUI();
+}
+
+// End Game
+function endGame() {
+    gameState.isGameOver = true;
+    clearInterval(gameState.timerId);
+    clickBtn.disabled = true;
+    clickBtn.classList.add("disabled");
+    alert(`Time is up! Your final score is ${gameState.count}`);
+}
+
+// Reset Game
+function resetGame() {
+    clearInterval(gameState.timerId);
+
+    gameState.count = 0;
+    gameState.timeLeft = 10;
+    gameState.isGameOver = false;
+
+    clickBtn.disabled = false;
+    clickBtn.classList.remove("disabled");
+
+    updateUI();
+    startTimer();
+}
+
+// Init
+updateUI();
+startTimer();
+
+// Events
+clickBtn.addEventListener("click", handleClick);
+resetBtn.addEventListener("click", resetGame);
