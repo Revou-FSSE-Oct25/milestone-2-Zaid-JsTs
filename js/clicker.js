@@ -16,9 +16,6 @@ function updateUI() {
     timerText.textContent = `Time left: ${gameState.timeLeft}s`;
 }
 
-updateUI();
-startTimer();
-
 // Timer
 function startTimer () {
     gameState.timerId = setInterval(function () {
@@ -46,7 +43,12 @@ function endGame() {
     clearInterval(gameState.timerId);
     clickBtn.disabled = true;
     clickBtn.classList.add("disabled");
-    alert(`Time is up! Your final score is ${gameState.count}`);
+
+    const restart = confirm(`⏰ Time's up!\nYour final score: ${gameState.count}\n\nPlay again?`);
+
+    if (restart) {
+    resetGame();
+  }
 }
 
 // Reset Game
