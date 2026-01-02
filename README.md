@@ -21,6 +21,7 @@ project-folder/
 │ ├── guess.js
 │ ├── rps.js
 │ └── clicker.js
+| └── index.js
 │
 └── css/
 └── styles.css
