@@ -166,3 +166,18 @@ footer {
     margin-top: 15vh;
     font-size: 0.85r
 }
+
+button.button {
+    background-color: burlywood;
+    color: #222;
+    transform: scale(1.08);
+}
+
+#quoteBox {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #555;
+    min-height: 2rem;
+    transition: 0.3s;
+}
